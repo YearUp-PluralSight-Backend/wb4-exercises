@@ -9,7 +9,7 @@ public class Employee {
     private String name;
     private String department;
     private double payRate;
-    private int hoursWorked;
+    private float hoursWorked;
 
     /**
      * Default constructor.
@@ -26,7 +26,7 @@ public class Employee {
      * @param payRate the pay rate of the employee
      * @param hoursWorked the number of hours worked by the employee
      */
-    public Employee(int id, String name, String department, double payRate, int hoursWorked) {
+    public Employee(int id, String name, String department, double payRate, float hoursWorked) {
         this.id = id;
         this.name = name;
         this.department = department;
@@ -111,7 +111,7 @@ public class Employee {
      *
      * @return the hours worked
      */
-    public int getHoursWorked() {
+    public float getHoursWorked() {
         return hoursWorked;
     }
 
@@ -129,8 +129,17 @@ public class Employee {
      *
      * @return the gross pay
      */
-    public double calculateGrossPay() {
+    public double getTotalPay() {
 
         return hoursWorked > 40 ? (40 * payRate) + ((hoursWorked - 40) * payRate * 1.5) : hoursWorked * payRate;
+    }
+
+
+    public double getRegularPay() {
+        return hoursWorked * payRate;
+    }
+
+    public double getOvertimePay() {
+        return hoursWorked > 40 ? (hoursWorked - 40) * payRate * 1.5 : 0;
     }
 }
