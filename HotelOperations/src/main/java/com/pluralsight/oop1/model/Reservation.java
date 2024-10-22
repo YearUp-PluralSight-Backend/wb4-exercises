@@ -1,6 +1,10 @@
 package com.pluralsight.oop1.model;
 
+import com.pluralsight.oop1.exceptions.RoomTypeException;
 import com.pluralsight.oop1.model.enums.RoomType;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 /**
  * Represents a reservation in a hotel or similar establishment.
@@ -9,10 +13,8 @@ public class Reservation {
 
     private int id;
     private Room room;
+    private RoomType reservedRoomType;
     private int numberOfNights;
-    private boolean isWeekend;
-    private double price;
-    private double totalPrice;
 
     /**
      * Default constructor.
@@ -24,17 +26,14 @@ public class Reservation {
      * Parameterized constructor to initialize a reservation with specific attributes.
      *
      * @param id the unique identifier for the reservation
-     * @param room the room associated with the reservation
      * @param numberOfNights the number of nights for the reservation
-     * @param isWeekend whether the reservation includes a weekend
-     * @param price the price per night for the reservation
+     * @param reservedRoomType the room type for the reservation
      */
-    public Reservation(int id, Room room, int numberOfNights, boolean isWeekend, double price) {
+    public Reservation(int id, int numberOfNights, RoomType reservedRoomType) {
         this.id = id;
-        this.room = room;
+        this.reservedRoomType = reservedRoomType;
         this.numberOfNights = numberOfNights;
-        this.isWeekend = isWeekend;
-        this.price = price;
+
     }
 
     /**
@@ -56,24 +55,6 @@ public class Reservation {
     }
 
     /**
-     * Gets the room associated with the reservation.
-     *
-     * @return the room
-     */
-    public Room getRoom() {
-        return room;
-    }
-
-    /**
-     * Sets the room associated with the reservation.
-     *
-     * @param room the room
-     */
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    /**
      * Gets the number of nights for the reservation.
      *
      * @return the number of nights
@@ -92,61 +73,63 @@ public class Reservation {
     }
 
     /**
-     * Checks if the reservation includes a weekend.
-     *
-     * @return true if the reservation includes a weekend, false otherwise
-     */
-    public boolean isWeekend() {
-        return isWeekend;
-    }
-
-    /**
-     * Sets whether the reservation includes a weekend.
-     *
-     * @param weekend true if the reservation includes a weekend, false otherwise
-     */
-    public void setWeekend(boolean weekend) {
-        isWeekend = weekend;
-    }
-
-    /**
      * Gets the price per night for the reservation.
      *
      * @return the price per night
      */
-    public double getPrice() {
+    public double getPrice() throws RoomTypeException {
+        double price;
+        switch (this.reservedRoomType) {
+            case SINGLE -> price = RoomType.SINGLE.getPrice();
+
+            case DOUBLE -> price = RoomType.DOUBLE.getPrice();
+            case SUITE -> price = RoomType.SUITE.getPrice();
+            case KING -> price = RoomType.KING.getPrice();
+            case QUEEN -> price = RoomType.QUEEN.getPrice();
+            case TWIN -> price = RoomType.TWIN.getPrice();
+            case VIP -> price = RoomType.VIP.getPrice();
+            default -> throw new RoomTypeException("Invalid Room Type");
+        }
+
         return price;
     }
 
-    /**
-     * Sets the price per night for the reservation.
-     *
-     * @param price the price per night
-     */
-    public void setPrice(double price) {
-        this.price = price;
+
+    public void setReservedRoomType(RoomType reservedRoomType) {
+        this.reservedRoomType = reservedRoomType;
     }
 
-    /**
-     * Gets the total price for the reservation.
-     *
-     * @return the total price
-     */
-    public double getTotalPrice() {
+    public RoomType getReservedRoomType() {
+        return reservedRoomType;
+    }
+
+    public double calculateTotalPrice() throws RoomTypeException {
+
+        double totalPrice;
+        LocalDate now = LocalDate.now();
+        if (!isAnyDayWeekend(now, numberOfNights)) {
+            totalPrice = (getPrice() * numberOfNights);
+        } else {
+            totalPrice = (getPrice() * numberOfNights) + ((getPrice() * numberOfNights) * 0.1);
+
+        }
         return totalPrice;
     }
 
-    /**
-     * Sets the total price for the reservation based on the room type and whether it includes a weekend.
-     */
-    public void setTotalPrice() {
-        if (!isWeekend()) {
-            this.totalPrice = room.getRoomType().equals(RoomType.DOUBLE) ?
-                    getNumberOfNights() * 124 : getNumberOfNights() * 139;
-        } else {
-            this.totalPrice = room.getRoomType().equals(RoomType.DOUBLE) ?
-                    ((getNumberOfNights() * 124 * 0.1) + getNumberOfNights() * 124)
-                    : ((getNumberOfNights() * 139 * 0.1) + getNumberOfNights() * 139);
+    private boolean isAnyDayWeekend(LocalDate startDate, int numberOfDays) {
+        for (int i = 0; i < numberOfDays; i++) {
+            LocalDate currentDate = startDate.plusDays(i);
+            if (isWeekend(currentDate)) {
+                return true;
+            }
         }
+        return false;
+    }
+
+    private boolean isWeekend(LocalDate today) {
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        return  dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+
+
     }
 }

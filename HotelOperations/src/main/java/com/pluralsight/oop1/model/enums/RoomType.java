@@ -2,19 +2,20 @@ package com.pluralsight.oop1.model.enums;
 
 public enum RoomType {
 
-    SINGLE(1),
-    DOUBLE(2),
-    SUITE(3),
-    KING(4),
-    QUEEN(5),
-    TWIN(6);
-    public int getValue() {
-        return value;
+    SINGLE(99),
+    DOUBLE(124),
+    SUITE(199),
+    KING(139),
+    QUEEN(109),
+    TWIN(119),
+    VIP(249);
+    public int getPrice() {
+        return price;
     }
 
-    private final int value;
+    private final int price;
 
-    RoomType(int value) {
-        this.value = value;
+    RoomType(int price) {
+        this.price = price;
     }
 }
