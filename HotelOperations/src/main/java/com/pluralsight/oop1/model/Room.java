@@ -1,5 +1,7 @@
 package com.pluralsight.oop1.model;
 
+import com.pluralsight.oop1.model.enums.RoomType;
+
 /**
  * Represents a room in a hotel or similar establishment.
  */
@@ -25,13 +27,15 @@ public class Room {
      * @param price the price of the room per night
      * @param isOccupied the occupancy status of the room
      * @param isDirty the cleanliness status of the room
+     * @param roomType the type of the room
      */
-    public Room(int id, int numberOfBeds, double price, boolean isOccupied, boolean isDirty) {
+    public Room(int id, int numberOfBeds, double price, boolean isOccupied, boolean isDirty, RoomType roomType) {
         this.id = id;
         this.NumberOfBeds = numberOfBeds;
         this.price = price;
         this.isOccupied = isOccupied;
         this.isDirty = isDirty;
+        this.roomType = roomType;
     }
 
     /**
@@ -133,5 +137,23 @@ public class Room {
      */
     public boolean isAvailable() {
         return !isOccupied && !isDirty;
+    }
+
+    /**
+     * Gets the type of the room.
+     *
+     * @return the room type
+     */
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    /**
+     * Sets the type of the room.
+     *
+     * @param roomType the room type
+     */
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 }

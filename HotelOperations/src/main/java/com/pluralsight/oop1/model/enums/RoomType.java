@@ -1,4 +1,4 @@
-package com.pluralsight.oop1.model;
+package com.pluralsight.oop1.model.enums;
 
 public enum RoomType {
 
@@ -7,9 +7,7 @@ public enum RoomType {
     SUITE(3),
     KING(4),
     QUEEN(5),
-    TWIN(6),
-    DOUBLE_DOUBLE(7);
-
+    TWIN(6);
     public int getValue() {
         return value;
     }
