@@ -1,6 +1,8 @@
 package com.pluralsight.oop1.model;
 
 import java.lang.reflect.Array;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -148,9 +150,15 @@ public class Employee {
     }
 
 
-    public String punchIn(LocalDateTime startWork) {
-
+    public double punchTimeCard(double startWork, double endWork) {
+        return endWork - startWork;
 
     }
 
+    public void punchTimeCard(LocalDateTime startWork, LocalDateTime endWork) {
+
+        Duration duration = Duration.between(startWork, endWork);
+        hoursWorked = (float) duration.toMinutes() / 60;
+
+    }
 }
