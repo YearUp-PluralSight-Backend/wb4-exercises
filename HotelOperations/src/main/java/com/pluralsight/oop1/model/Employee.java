@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 
 /**
@@ -149,6 +150,22 @@ public class Employee {
         return hoursWorked > 40 ? (hoursWorked - 40) * payRate * 1.5 : 0;
     }
 
+    public LocalDateTime punchIn() {
+        return LocalDateTime.now();
+    }
+
+    public LocalDateTime punchOut() {
+        return LocalDateTime.now();
+    }
+
+    public LocalDateTime punchIn(LocalDateTime startWork) {
+        return  startWork;
+    }
+
+    public LocalDateTime punchOut(LocalDateTime endWork) {
+        return endWork;
+    }
+
 
     public double punchTimeCard(double startWork, double endWork) {
         return endWork - startWork;
@@ -159,6 +176,5 @@ public class Employee {
 
         Duration duration = Duration.between(startWork, endWork);
         hoursWorked = (float) duration.toMinutes() / 60;
-
     }
 }

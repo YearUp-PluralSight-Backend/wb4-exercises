@@ -161,9 +161,14 @@ public class Room {
 
 
     public void checkIn(){
+        if (isAvailable()) {
+            System.out.println("Check in successful");
+        }
         if (isOccupied) {
-            System.out.println("Room is already occupied");
-            return;
+            System.out.println("Room is occupied");
+        }
+        if (isDirty) {
+            System.out.println("Room needs to clean before check in");
         }
 
         isOccupied = true;
