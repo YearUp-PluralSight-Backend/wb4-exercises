@@ -1,5 +1,7 @@
 package com.pluralsight.oop1.model;
 
+import com.pluralsight.oop1.exceptions.RoomException;
+import com.pluralsight.oop1.exceptions.RoomTypeException;
 import com.pluralsight.oop1.model.enums.RoomType;
 
 /**
@@ -7,7 +9,7 @@ import com.pluralsight.oop1.model.enums.RoomType;
  */
 public class Room {
 
-    private int id;
+    private int roomNumber;
     private int NumberOfBeds;
     private double price;
     private boolean isOccupied;
@@ -22,15 +24,15 @@ public class Room {
     /**
      * Parameterized constructor to initialize a room with specific attributes.
      *
-     * @param id the unique identifier for the room
+     * @param roomNumber the unique identifier for the room
      * @param numberOfBeds the number of beds in the room
      * @param price the price of the room per night
      * @param isOccupied the occupancy status of the room
      * @param isDirty the cleanliness status of the room
      * @param roomType the type of the room
      */
-    public Room(int id, int numberOfBeds, double price, boolean isOccupied, boolean isDirty, RoomType roomType) {
-        this.id = id;
+    public Room(int roomNumber, int numberOfBeds, double price, boolean isOccupied, boolean isDirty, RoomType roomType) {
+        this.roomNumber = roomNumber;
         this.NumberOfBeds = numberOfBeds;
         this.price = price;
         this.isOccupied = isOccupied;
@@ -41,19 +43,19 @@ public class Room {
     /**
      * Gets the unique identifier for the room.
      *
-     * @return the room ID
+     * @return the room roomNumber
      */
-    public int getId() {
-        return id;
+    public int getRoomNumber() {
+        return roomNumber;
     }
 
     /**
      * Sets the unique identifier for the room.
      *
-     * @param id the room ID
+     * @param roomNumber the room roomNumber
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     /**
@@ -156,4 +158,36 @@ public class Room {
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
+
+
+    public void checkIn(){
+        if (isOccupied) {
+            System.out.println("Room is already occupied");
+            return;
+        }
+
+        isOccupied = true;
+        isDirty = true;
+
+    }
+
+    public void checkOut() {
+
+        if (!isOccupied) {
+            System.out.println("Room is not occupied");
+            return;
+        }
+        isOccupied = false;
+        cleanRoom();
+    }
+
+    public void cleanRoom() {
+
+        if (!isDirty) {
+            System.out.println("Room is already cleaned");
+        }
+
+        isDirty = false;
+    }
+
 }

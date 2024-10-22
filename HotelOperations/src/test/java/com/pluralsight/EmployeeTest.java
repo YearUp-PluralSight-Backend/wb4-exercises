@@ -22,9 +22,9 @@ public class EmployeeTest {
          *     private int hoursWorked;
          */
 
-        Employee employee = new Employee(1, "John", "Sales", 4.5, 45);
+        Employee employee = new Employee(1, "John", "Sales", 10, 45);
         try {
-            double expected = 40 * 4.5 + (5 * 4.5 * 1.5);
+            double expected = 40 * 10 + (5 * 10 * 1.5);
             double salary = employee.getTotalPay();
             System.out.println(expected == salary);
             assertEquals(expected, salary);

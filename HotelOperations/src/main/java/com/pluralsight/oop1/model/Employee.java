@@ -1,5 +1,9 @@
 package com.pluralsight.oop1.model;
 
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 /**
  * Represents an employee in a company.
  */
@@ -142,4 +146,11 @@ public class Employee {
     public double getOvertimePay() {
         return hoursWorked > 40 ? (hoursWorked - 40) * payRate * 1.5 : 0;
     }
+
+
+    public String punchIn(LocalDateTime startWork) {
+
+
+    }
+
 }
