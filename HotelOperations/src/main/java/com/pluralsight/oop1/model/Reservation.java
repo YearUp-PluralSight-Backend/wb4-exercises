@@ -104,26 +104,30 @@ public class Reservation {
     }
 
     public double calculateTotalPrice() throws RoomTypeException {
-
         double totalPrice;
         LocalDate now = LocalDate.now();
-        if (!isAnyDayWeekend(now, numberOfNights)) {
-            totalPrice = (getPrice() * numberOfNights);
-        } else {
-            totalPrice = (getPrice() * numberOfNights) + ((getPrice() * numberOfNights) * 0.1);
 
+        int numberOfWeekends = isAnyDayWeekend(now, numberOfNights);
+        System.out.println(numberOfWeekends);
+        if (numberOfWeekends > 0) {
+            totalPrice = (getPrice() * (numberOfNights - numberOfWeekends)) + ((getPrice() * numberOfWeekends) * 1.1);
+        } else {
+            totalPrice = (getPrice() * numberOfNights);
         }
+        System.out.println(totalPrice);
         return totalPrice;
     }
 
-    private boolean isAnyDayWeekend(LocalDate startDate, int numberOfDays) {
+    private int isAnyDayWeekend(LocalDate startDate, int numberOfDays) {
+        int numberOfWeekends = 0;
         for (int i = 0; i < numberOfDays; i++) {
             LocalDate currentDate = startDate.plusDays(i);
             if (isWeekend(currentDate)) {
-                return true;
+                numberOfWeekends++;
             }
         }
-        return false;
+
+        return numberOfWeekends;
     }
 
     private boolean isWeekend(LocalDate today) {

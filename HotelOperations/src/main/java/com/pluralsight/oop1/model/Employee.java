@@ -130,6 +130,7 @@ public class Employee {
      * @return the gross pay
      */
     public double calculateGrossPay() {
-        return this.hoursWorked * this.payRate;
+
+        return hoursWorked > 40 ? (40 * payRate) + ((hoursWorked - 40) * payRate * 1.5) : hoursWorked * payRate;
     }
 }
